@@ -4127,12 +4127,13 @@ async function run() {
     const { owner, repo } = context.repo;
 
     // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
-    const tagName = core.getInput('tag_name', { required: true });
+    // const tagName = core.getInput('tag_name', { required: true });
 
     // This removes the 'refs/tags' portion of the string, i.e. from 'refs/tags/v1.10.15' to 'v1.10.15'
-    const tag = tagName.replace('refs/tags/', '');
+    // const tag = tagName.replace('refs/tags/', '');
     // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
     // const uploadUrl = core.getInput('upload_url', { required: true });
+    const tagName = core.getInput('tag_name', { required: true });
     const assetPath = core.getInput('asset_path', { required: true });
     const assetName = core.getInput('asset_name', { required: true });
     const assetContentType = core.getInput('asset_content_type', { required: true });
@@ -4149,7 +4150,7 @@ async function run() {
       const getReleaseByTagResponse = await github.repos.getReleaseByTag({
         owner,
         repo,
-        tag
+        tag: tagName
       });
 
       if (getReleaseByTagResponse && getReleaseByTagResponse.data) {
